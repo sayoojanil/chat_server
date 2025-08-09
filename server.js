@@ -11,6 +11,11 @@ const io = new Server(server, {
     }
 });
 
+// Serve a simple HTML page at /
+app.get('/', (req, res) => {
+    res.send('<h1>Server is running 🚀</h1>');
+});
+
 io.on('connection', (socket) => {
     console.log('A user connected');
 
