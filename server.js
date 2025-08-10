@@ -83,6 +83,22 @@ io.on('connection', (socket) => {
         }); // Broadcast to all clients
     });
 
+    socket.on('voice', (data) => {
+        if (!data || !data.username || !data.audio || typeof data.audio !== 'string' || !data.duration) {
+            console.log('Invalid voice data received');
+            return;
+        }
+        const messageId = uuidv4();
+        console.log(`Voice message received from: ${data.username} (ID: ${messageId})`);
+        messageSeenStatus.set(messageId, new Set()); // Initialize seen status for this voice message
+        io.emit('voice', {
+            username: data.username,
+            audio: data.audio,
+            duration: data.duration,
+            id: messageId
+        }); // Broadcast to all clients
+    });
+
     socket.on('seen', (data) => {
         if (!data || !data.messageId || !data.username || typeof data.username !== 'string') {
             console.log('Invalid seen data received');
