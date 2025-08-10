@@ -18,7 +18,7 @@ app.use(express.static('public')); // Serve static files if needed (e.g., for ho
 
 // Serve a simple HTML page at /
 app.get('/', (req, res) => {
-    res.send('<h1>Chat Server is running 🚀</h1>');
+    res.send('<h1>Chat Server is running cls</h1>');
 });
 
 // Store seen status for messages
@@ -40,17 +40,9 @@ io.on('connection', (socket) => {
         socket.username = username.trim();
         console.log(`${socket.username} joined the chat`);
         // Broadcast join message to all clients except the sender
-        socket.broadcast.emit('message', {
-            username: 'System',
-            message: `${socket.username} has joined the chat`,
-            id: uuidv4()
-        });
+      
         // Send welcome message to the joining client
-        socket.emit('message', {
-            username: 'System',
-            message: `Welcome to the chat, ${socket.username}!`,
-            id: uuidv4()
-        });
+       
     });
 
     socket.on('message', (data) => {
